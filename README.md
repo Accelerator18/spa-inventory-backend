@@ -249,13 +249,24 @@ estimated_cost = recommended_purchase_qty * unit_price
 
 ## Переменные окружения
 
-Пример находится в `.env.example`:
+Пример настроек находится в `.env.example`:
 
 ```env
+POSTGRES_DB=spa
+POSTGRES_USER=spa
+POSTGRES_PASSWORD=spa
 DATABASE_URL=postgresql+psycopg://spa:spa@db:5432/spa
 EXPIRY_ALERT_DAYS=30
 NO_MOVEMENT_DAYS=90
 ```
+
+Для обычного запуска создавать `.env` не обязательно: в `docker-compose.yml` есть значения по умолчанию. Если нужно изменить настройки, можно скопировать пример:
+
+```bash
+cp .env.example .env
+```
+
+`POSTGRES_DB`, `POSTGRES_USER` и `POSTGRES_PASSWORD` задают настройки PostgreSQL. Если их менять, нужно также изменить `DATABASE_URL`.
 
 `EXPIRY_ALERT_DAYS` задаёт, за сколько дней считать срок годности близким к окончанию.
 

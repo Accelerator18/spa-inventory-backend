@@ -2,11 +2,11 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: spa
-      POSTGRES_USER: spa
-      POSTGRES_PASSWORD: spa
+      POSTGRES_DB: ${POSTGRES_DB:-spa}
+      POSTGRES_USER: ${POSTGRES_USER:-spa}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-spa}
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U spa -d spa"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-spa} -d ${POSTGRES_DB:-spa}"]
       interval: 3s
       timeout: 3s
       retries: 20
@@ -16,9 +16,9 @@ services:
   api:
     build: .
     environment:
-      DATABASE_URL: postgresql+psycopg://spa:spa@db:5432/spa
-      EXPIRY_ALERT_DAYS: 30
-      NO_MOVEMENT_DAYS: 90
+      DATABASE_URL: ${DATABASE_URL:-postgresql+psycopg://spa:spa@db:5432/spa}
+      EXPIRY_ALERT_DAYS: ${EXPIRY_ALERT_DAYS:-30}
+      NO_MOVEMENT_DAYS: ${NO_MOVEMENT_DAYS:-90}
     depends_on:
       db:
         condition: service_healthy
